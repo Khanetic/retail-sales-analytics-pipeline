@@ -6,7 +6,7 @@ import pandas as pd
 from sqlalchemy import create_engine, inspect, text
 
 
-DB_URL = "postgresql://retail:retail123@localhost:5433/retail_db"
+DB_URL = "postgresql://retail:retail123@postgres:5432/retail_db"
 DATA_DIR = Path("data/raw")
 
 engine = create_engine(DB_URL)
