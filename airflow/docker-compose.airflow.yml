@@ -1,0 +1,71 @@
+# airflow/docker-compose.airflow.yml
+x-airflow-common: &airflow-common
+  image: apache/airflow:2.9.1
+  environment:
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://retail:retail123@postgres:5432/retail_db
+    AIRFLOW__CORE__FERNET_KEY: ''
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    AIRFLOW__WEBSERVER__SECRET_KEY: 'retail_secret'
+    # lets Airflow find your pipeline code
+    PYTHONPATH: /opt/airflow
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ../ingestion:/opt/airflow/ingestion
+    - ../models:/opt/airflow/models
+    - ../marts:/opt/airflow/marts
+    - ../quality:/opt/airflow/quality
+    - ../data:/opt/airflow/data
+    - airflow_logs:/opt/airflow/logs
+  networks:
+    - retail_net
+  depends_on:
+    - postgres
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: retail
+      POSTGRES_PASSWORD: retail123
+      POSTGRES_DB: retail_db
+    ports:
+      - "5433:5432"
+    networks:
+      - retail_net
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  airflow-init:
+    <<: *airflow-common
+    command: >
+      bash -c "
+        pip install sqlalchemy psycopg2-binary pandas faker openpyxl &&
+        airflow db migrate &&
+        airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com
+      "
+    restart: on-failure
+
+  airflow-webserver:
+    <<: *airflow-common
+    command: webserver
+    ports:
+      - "8081:8080"
+    restart: always
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: >
+      bash -c "
+        pip install sqlalchemy psycopg2-binary pandas faker openpyxl &&
+        airflow scheduler
+      "
+    restart: always
+
+networks:
+  retail_net:
+    driver: bridge
+
+volumes:
+  pgdata:
+  airflow_logs:
