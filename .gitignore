@@ -1,5 +1,8 @@
 # Python
 __pycache__/
+*.pyc
+*.egg-info/
+
 *.py[cod]
 *.pyo
 *.pyd
@@ -20,3 +23,20 @@ env/
 
 # Logs
 *.log
+
+
+# credentials
+.env
+
+# data files — never commit raw or exported data
+data/raw/
+data/exports/
+
+
+# Airflow
+airflow/logs/
+airflow.cfg
+
+# OS
+.DS_Store
+Thumbs.db

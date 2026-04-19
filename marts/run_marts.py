@@ -1,7 +1,12 @@
 from pathlib import Path
 from sqlalchemy import create_engine, text
+import os
+from dotenv import load_dotenv
 
-DB_URL = "postgresql://retail:retail123@localhost:5433/retail_db"
+DB_URL = (
+    f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}"
+    f"@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+)
 engine = create_engine(DB_URL)
 
 MARTS = [
