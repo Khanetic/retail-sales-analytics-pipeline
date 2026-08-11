@@ -79,6 +79,8 @@ Trigger the `retail_pipeline` DAG to run the full pipeline end-to-end.
 ## Dashboard
 
 [View on Tableau Public →](https://public.tableau.com/your-dashboard-link)
+<img width="1280" height="719" alt="1778094218371" src="https://github.com/user-attachments/assets/5970e0c1-dcac-4894-9fc3-1e76a7e45414" />
+
 
 ## Project structure
 
