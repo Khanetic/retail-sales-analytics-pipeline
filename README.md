@@ -81,6 +81,19 @@ Trigger the `retail_pipeline` DAG to run the full pipeline end-to-end.
 [View on Tableau Public →](https://public.tableau.com/your-dashboard-link)
 <img width="1280" height="719" alt="1778094218371" src="https://github.com/user-attachments/assets/5970e0c1-dcac-4894-9fc3-1e76a7e45414" />
 
+### Power BI dashboard
+
+A second dashboard was built in Power BI (Service) on top of the three marts (`mart_daily_revenue`, `mart_top_products`, `mart_customer_ltv`). The data is simulated, and only completed orders are counted (returned and cancelled orders are excluded by the pipeline). Totals reconcile with the SQL marts: 849,661.88 gross revenue across 594 completed orders.
+
+| Page | Content |
+|---|---|
+| Revenue Trend | Daily gross revenue with 7-day rolling revenue, KPI cards for total revenue and orders |
+| Top Products | Revenue by category and a ranked product table (revenue, units sold) |
+| Customer Segments | Lifetime value and order share by customer segment (VIP, Loyal, Occasional, At Risk) |
+
+![Power BI - Revenue Trend](docs/images/powerbi_revenue_trend.png)
+![Power BI - Top Products](docs/images/powerbi_top_products.png)
+![Power BI - Customer Segments](docs/images/powerbi_customer_segments.png)
 
 ## Project structure
 
